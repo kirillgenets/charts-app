@@ -1,0 +1,22 @@
+{
+  "extends": ["prettier"],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es6": true
+  },
+  "plugins": ["prettier", "react", "unused-imports"],
+  "rules": {
+    "react/jsx-uses-react": [1],
+    "react/jsx-uses-vars": [1],
+    "prettier/prettier": ["error"],
+    "no-redeclare": ["error"],
+    "no-undef": ["error"],
+    "unused-imports/no-unused-imports": ["error"],
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ]
+  }
+}

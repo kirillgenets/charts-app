@@ -1,0 +1,16 @@
+node_modules/
+coverage/
+yarn-error.log
+.idea
+.DS_Store
+build/
+dist/
+*.pyc
+*.egg-info
+*.log
+.python-version
+flask_session/
+public/
+
+gps_ui_charts/static/
+gps_ui_charts/_version.py
