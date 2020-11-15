@@ -15,6 +15,7 @@
 		"lodash.clonedeep": "^4.5.0",
 		"lodash.debounce": "^4.0.8",
 		"lodash.defaultsdeep": "^4.6.1",
+		"plotly.js": "^1.57.1",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-fast-compare": "^3.2.0"

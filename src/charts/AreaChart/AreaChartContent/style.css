@@ -1,0 +1,24 @@
+.area-chart__content {
+  position: relative;
+}
+
+.area-chart__content .cursor-ew-resize {
+  cursor: default !important;
+}
+
+.area-chart__zoom-controls {
+  position: absolute;
+  top: 0;
+}
+
+.area-chart__content .toolbar {
+  border: none;
+}
+
+.area-chart__tooltip {
+  border-radius: 0 !important;
+
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  opacity: 1 !important;
+}

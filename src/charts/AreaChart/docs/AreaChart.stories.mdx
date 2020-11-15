@@ -1,0 +1,1032 @@
+import { useState } from 'react';
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import DemoLiveEditor from '../../../../config/storybook/components/DemoLiveEditor/DemoLiveEditor';
+import AreaChart from '../AreaChart';
+import { shortData, dataWithManyStates } from '../mockData';
+
+<Meta title="Custom/Area Chart" component={AreaChart} />
+
+# Area chart documentation
+
+<br />
+
+<div style={{ fontSize: 18 }}>
+  The Area chart from MK charts renders a dataset as a series of filled areas. <br />
+  As a responsive chart, the area chart requires to be wrapped into a DOM element with a specified width and height.
+</div>
+
+<Preview>
+  <Story name="Example">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+      />
+    </div>
+  </Story>
+</Preview>
+
+## Interactivity
+
+The **area chart** provides next interactivity abilities:
+
+| Action                                                      | Chart reaction                                                         |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Hovering on the chart at some x-axis point                  | Tooltip for all areas at the current x-axis point is shown.            |
+| Mouse wheel (or similar action on a laptop touchpad)        | Chart zooms in/out.                                                    |
+| Dragging                                                    | Viewport is changing position relative to the chart.                   |
+| Double click                                                | Chart zoom and viewport position return to the initial state.          |
+
+## Chart configuration
+
+**Contents:**
+
+- [data](#data);
+- [legendConfig](#legendconfig);
+- [isStacked](#isstacked);
+- [normalizedGroupType](#normalizedgrouptype);
+- [displayMarkers](#displaymarkers);
+- [displayLines](#displaylines);
+- [displayTooltips](#displaytooltips);
+- [xAxis](#xaxis);
+- [yAxis](#yaxis);
+- [decimalSeparator](#decimalseparator);
+- [thousandSeparator](#thousandseparator);
+- [displayZoomControls](#displayzoomcontrols);
+- [themeName](#themename);
+- [tickLabelsFontSize](#ticklabelsfontsize);
+- [enableAreasSelection](#enableareasselection);
+- [selectedAreas](#selectedareas);
+- [onAreaClick](#onareaclick);
+- [Usage Example](#usage-example);
+- [Usage Example (Lasagna chart)](#usage-example-lasagna);
+
+### data
+
+`type: object[]`
+
+Specify the chart dataset via the **data** prop. <br />
+The **data** prop includes information about areas positioning, names and colors. <br />
+**This prop is required!**
+
+A list of properties of the **data** prop object:
+
+| Property name  | Type               | Default value  | Description                                                                                                                                                     |
+| -------------- | ------------------ | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **name**       | `string`           | **isRequired** | Name of the current area, that is displayed in the legend and tooltip.                                                                                          |
+| **x**          | `number or string` | **isRequired** | Point position on **x**-axis.                                                                                                                                   |
+| **y**          | `number or string` | **isRequired** | Point position on **y**-axis.                                                                                                                                   |
+| **marker**     | `string`           | `none`         | Shape of the points in the area. May be one of the [supported symbols](#symbols).                                                                               |
+| **fillColor**  | `string`           | `none`         | Color of the current area. If it is not specified, the area will be colored in one of default colors.                                                           |
+| **lineColor**  | `string`           | `none`         | Color of the line, that is placed above the area.                                                                                                               |
+
+An example of the **area chart** with specified colors and markers:
+
+<Preview>
+  <Story name="With specified colors and markers">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+            marker: 'star',
+            fillColor: 'red',
+            lineColor: 'purple'
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+            marker: 'square',
+            fillColor: 'orange',
+            lineColor: 'blue',
+          },
+        ]}
+        displayMarkers={true}
+        displayLines={true}
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### Symbols
+
+There is a full list of symbols, that can be used in the **area chart**:
+
+<details>
+  <summary>Symbols list</summary>
+  'circle' <br />
+  'square' <br />
+  'diamond' <br />
+  'cross' <br />
+  'x' <br />
+  'triangle-up' <br />
+  'triangle-down' <br />
+  'triangle-left' <br />
+  'triangle-right' <br />
+  'triangle-ne' <br />
+  'triangle-se' <br />
+  'triangle-sw' <br />
+  'triangle-nw' <br />
+  'pentagon' <br />
+  'hexagon' <br />
+  'hexagon2' <br />
+  'octagon' <br />
+  'star' <br />
+  'hexagram' <br />
+  'star-triangle-up' <br />
+  'star-triangle-down' <br />
+  'star-square' <br />
+  'star-diamond' <br />
+  'diamond-tall' <br />
+  'diamond-wide' <br />
+</details>
+
+### legendConfig
+
+`type: object`
+
+Custom config for rendering the legend. By default, the legend is visible and calculated from the [data](#data) prop. <br />
+The **legendConfig** object must have next shape:
+
+| Property name  | Type               | Default value  | Description                                                                                                                                                     |
+| -------------- | ------------------ | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **isVisible**  | `boolean`          | `true`         | Indicates whether the legend should be visible or not.                                                                                                          |
+| **orientation**| `string`           | `vertical`     | Position of the legend regarding the chart. Must be one of: `'vertical'`, `'horizontal'`, `'horizontal-left'`.                                                  |
+| **items**      | `object[]`         | `[]`          | Custom legend items.                                                                                                                                            |
+| **hideAndKeepPlace**      | `boolean`         | `false`          | Indicates that legend should be invisible but keep its place.                                                                                                                                            |
+
+The **items** property from the **legendConfig** prop must be of next shape:
+
+| Property name       | Type     | Default value | Description                                                                                                                                                                             |
+| ------------------- | -------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **label**           | `string` | `''`          | Text, that is displayed in the legend for the current legend item.                                                                                                                      |
+| **color**           | `string` | `none`        | Color of the symbol in the legend item.                                                                                                                                                 |
+| **type**            | `string` | `none`        | Shape of the symbol. May be one of the [supported symbols](#symbols).                                                                                                                   |
+
+An example **area chart** without legend:
+
+<Preview>
+  <Story name="Without legend">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        legendConfig={{
+          isVisible: false
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with the `'horizontal'` legend:
+
+<Preview>
+  <Story name="With horizontal legend">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        legendConfig={{
+          orientation: 'horizontal'
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with the `'horizontal-left'` legend:
+
+<Preview>
+  <Story name="With horizontal-left legend">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        legendConfig={{
+          orientation: 'horizontal-left'
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with custom legend items:
+
+<Preview>
+  <Story name="With custom legend items">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        legendConfig={{
+          items: [
+            { label: 'Gross Sales', color: 'red', type: 'diamond' },
+            { label: 'Invoice Revenues', color: 'blue', type: 'star' }
+          ]
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+### isStacked
+
+`type: boolean`
+
+Indicates whether the chart should be stacked or not. By default, it is `false`.
+
+### normalizedGroupType
+
+`type: string`
+
+A type of chart group normalization. Must be one of `''`, `'percent'`, `'fraction'`. By default, it is `''`. <br />
+To create the **lasagna** chart you need to choose the `'percent'`. <br />
+For the correct work of this prop you need to set the [isStacked](#isstacked) prop to `true`.
+
+An example of the **lasagna** chart:
+
+<Preview>
+  <Story name="Lasagna (Stacked + Percent Normalized)">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        isStacked={true}
+        normalizedGroupType="percent"
+      />
+    </div>
+  </Story>
+</Preview>
+
+### displayMarkers
+
+`type: boolean`
+
+Indicates whether markers should be visible or not. By default, it is `false`. <br />
+For correct work markers displaying the [displayLines](#displaylines) prop should be set to `true`.
+
+### displayLines
+
+`type: boolean`
+
+Indicates whether lines should be visible or not. By default, it is `false`. <br />
+For correct lines displaying you need to specify the **lineColor** property from the [data](#data) prop.
+
+An example of the **area chart** with visible lines and markers:
+
+<Preview>
+  <Story name="With lines">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+            lineColor: 'red',
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+            lineColor: 'orange',
+          },
+        ]}
+        displayLines={true}
+        displayMarkers={true}
+      />
+    </div>
+  </Story>
+</Preview>
+
+### displayTooltips
+
+`type: boolean`
+
+Indicates whether tooltips should be visible or not. By default, it is `true`. <br />
+
+An example of the **area chart** without tooltips:
+
+<Preview>
+  <Story name="Without tooltips">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        displayTooltips={false}
+      />
+    </div>
+  </Story>
+</Preview>
+
+### xAxis
+
+`type: object`
+
+Config for the x-axis. Through this prop you can fully configure the x-axis. <br />
+The **xAxis** prop must have the [axis config shape](#axis-config).
+
+An example with x-axis label:
+
+<Preview>
+  <Story name="With x-axis label">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        xAxis={{
+          label: 'X-AXIS'
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example of the **area chart** with disabled x-axis elements:
+
+<Preview>
+  <Story name="With disabled x-axis elements">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        xAxis={{
+          displayLine: false,
+          displayZeroLine: false,
+          displayGridLines: false,
+          displayTickLabels: false,
+          displayTicks: false,
+          displayLabel: false,
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with specified x-axis domain:
+
+<Preview>
+  <Story name="With x-axis domain">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: [8, 14, 22],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: [8, 14, 22],
+            y: [3, 2, 1],
+          },
+        ]}
+        xAxis={{
+          domain: [-5, 80],
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with disabled x-axis zoom:
+
+<Preview>
+  <Story name="Without x-axis zoom">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        xAxis={{
+          isZoomable: false
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with x-axis formatting:
+
+<Preview>
+  <Story name="With x-axis formatting">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: [1, 2, 3],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: [1, 2, 3],
+            y: [3, 2, 1],
+          },
+        ]}
+        xAxis={{
+          format: {
+            decimalPlaces: 3,
+            prefix: '$',
+            postfix: ' K',
+          }
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with specified x-axis tick step:
+
+<Preview>
+  <Story name="With x-axis tick step">
+    <div style={{ height: 900, width: '100%' }}>
+      <AreaChart
+        data={dataWithManyStates}
+        xAxis={{
+          tickStep: 10,
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+### yAxis
+
+`type: object`
+
+Config for the y-axis. Through this prop you can fully configure the y-axis. <br />
+The **yAxis** prop must have the [axis config shape](#axis-config).
+
+An example with y-axis label:
+
+<Preview>
+  <Story name="With y-axis label">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        yAxis={{
+          label: 'X-AXIS'
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example of the **area chart** with disabled y-axis elements:
+
+<Preview>
+  <Story name="With disabled y-axis elements">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        yAxis={{
+          displayLine: false,
+          displayZeroLine: false,
+          displayGridLines: false,
+          displayTickLabels: false,
+          displayTicks: false,
+          displayLabel: false,
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with specified y-axis domain:
+
+<Preview>
+  <Story name="With y-axis domain">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        yAxis={{
+          domain: [-5, 30],
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with disabled y-axis zoom:
+
+<Preview>
+  <Story name="Without y-axis zoom">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        yAxis={{
+          isZoomable: false
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with y-axis formatting:
+
+<Preview>
+  <Story name="With y-axis formatting">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        yAxis={{
+          format: {
+            decimalPlaces: 3,
+            prefix: '$',
+            postfix: ' K',
+          }
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+An example with specified y-axis tick step:
+
+<Preview>
+  <Story name="With y-axis tick step">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4, 8, 5],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3, 2, 1],
+          },
+        ]}
+        yAxis={{
+          tickStep: 0.5,
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### Axis config
+
+| Property name        | Type                                                    | Default value  | Description                                                                                                                                                                                                                                                                                                                                  |
+| -------------------- | ------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **label**            | `string`                                                | `''`           | Title of the axis, that is displayed below (x-axis) or to the left of axis (y-axis).                                                                                                                                                                                                                                                         |
+| **domain**           | `[number, number]`                                      | `[]`           | Min and max initial values of the current axis. By default, it is calculated automatically from the [data](#data) prop.                                                                                                                                                                                                                      |
+| **displayLine**      | `boolean`                                               | `true`         | Indicates whether the axis line should be visible or not.                                                                                                                                                                                                                                                                                    |
+| **displayZeroLine**  | `boolean`                                               | `true`         | Indicates whether the axis zero line (line at 0 position) should be visible or not.                                                                                                                                                                                                                                                          |
+| **displayGridLines** | `boolean`                                               | `true`         | Indicates whether the axis grid lines should be visible or not.                                                                                                                                                                                                                                                                              |
+| **displayTickLabels**| `boolean`                                               | `true`         | Indicates whether the axis tick labels should be visible or not.                                                                                                                                                                                                                                                                             |
+| **displayTicks**     | `boolean`                                               | `true`         | Indicates whether the axis tick lines should be visible or not.                                                                                                                                                                                                                                                                              |
+| **displayLabel**     | `boolean`                                               | `true`         | Indicates whether the axis label (title) should be visible or not.                                                                                                                                                                                                                                                                           |
+| **isZoomable**       | `boolean`                                               | `true`         | Indicates whether the ability to zoom in the current axis should be enabled or not.                                                                                                                                                                                                                                                          |
+| **format**           | `object` of the [axis format shape](#axis-format-shape) | `{}`           | Formatting config for the current axis tick labels. You should use the [axis format shape](#axis-format-shape) for this property.                                                                                                                                                                                                            |
+| **tickStep**         | `number`                                                | `0`            | For numeric axis it represents the step between axis tick values. For axis with string values it shows which labels should be shown with initial zoom. For example, with the **tickStep** `1` all tick values will be shown, with **tickStep** `2` each second will be shown. If `0` is passed, tick step will be calculated automatically.  |
+
+#### Axis format shape
+
+Values of axis tick labels can be formatted using this config:
+
+| Property name         | Type                                                  | Default value  | Description                                                                                                                                               |
+| --------------------- | ------------------------------------------------------| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **decimalPlaces**     | `number`                                              | `none`         | The length of the decimal part of the value.                                                                                                              |
+| **prefix**            | `string`                                              | `''`           | A string that precedes the value.                                                                                                                         |
+| **postfix**           | `string`                                              | `''`           | A string that is after the value.                                                                                                                         |
+
+___
+
+### decimalSeparator
+
+`type: string`
+
+A one-symbol string, that separates integer and decimal parts of values in the chart. By default, it is `'.'`.
+
+### thousandSeparator
+
+`type: string`
+
+A one-symbol string, that separates every 3 symbols (thousands) of values in the chart. By default, there is no thousand separator.
+
+An example of the **area chart** with specified separators:
+
+<Preview>
+  <Story name="With decimal and thousand separators">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4000, 8000, 5000],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3000, 2000, 1000],
+          },
+        ]}
+        yAxis={{
+          format: {
+            decimalPlaces: 1,
+          }
+        }}
+        decimalSeparator=","
+        thousandSeparator="."
+      />
+    </div>
+  </Story>
+</Preview>
+
+### displayZoomControls
+
+`type: boolean`
+
+Indicates whether zoom controls should be enabled or not. By default, it is `true`.
+
+An example with disabled zoom controls:
+
+<Preview>
+  <Story name="Without zoom controls">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4000, 8000, 5000],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3000, 2000, 1000],
+          },
+        ]}
+        displayZoomControls={false}
+      />
+    </div>
+  </Story>
+</Preview>
+
+### themeName
+
+`type: string`
+
+Name of the theme. Should be one of `'default'`, `'mds'`. By default, it is `'default'`;
+
+An example of the **area chart** with `'mds'` theme:
+
+<Preview>
+  <Story name="MDS Theme">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4000, 8000, 5000],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3000, 2000, 1000],
+          },
+        ]}
+        themeName="mds"
+      />
+    </div>
+  </Story>
+</Preview>
+
+### tickLabelsFontSize
+
+`type: number`
+
+Through this prop you can change a default font size. By default, font size is set to `11` pixels.
+
+An example of the **area chart** with `14` px font size in tick labels:
+
+<Preview>
+  <Story name="With specified tickLabelsFontSize">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4000, 8000, 5000],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3000, 2000, 1000],
+          },
+        ]}
+        tickLabelsFontSize={14}
+      />
+    </div>
+  </Story>
+</Preview>
+
+
+### enableAreasSelection
+
+`type: boolean`
+
+Indicates whether areas selection on click should be enabled or not. By default, it is disabled.
+
+An example with specified selected areas:
+
+<Preview>
+  <Story name="With enabled areas selection">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4000, 8000, 5000],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3000, 2000, 1000],
+          },
+        ]}
+        isStacked={true}
+        normalizedGroupType="percent"
+        enableAreasSelection={true}
+      />
+    </div>
+  </Story>
+</Preview>
+
+### selectedAreas
+
+`type: string[]`
+
+A list of initially selected areas names.
+
+An example with specified selected areas:
+
+<Preview>
+  <Story name="With selectedAreas">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4000, 8000, 5000],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3000, 2000, 1000],
+          },
+        ]}
+        isStacked={true}
+        normalizedGroupType="percent"
+        selectedAreas={['State 2']}
+      />
+    </div>
+  </Story>
+</Preview>
+
+### onAreaClick
+
+`type: function`
+
+Callback, that is called when clicking on any area. It receives the object with the next shape in params: `{ selectedAreas: object[] // A list of selected areas data }` <br />
+For correct work of this prop the [enableAreasSelection](#enableareasselection) prop should be set to `true`.
+
+An example of the **area chart** with specified `onAreaClick` callback:
+
+<Preview>
+  <Story name="With onAreaClick callback">
+    <div style={{ height: 500, width: '100%' }}>
+      <AreaChart
+        data={[
+          {
+            name: 'State 1',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [4000, 8000, 5000],
+          },
+          {
+            name: 'State 2',
+            x: ['2012-01', '2012-02', '2012-03'],
+            y: [3000, 2000, 1000],
+          },
+        ]}
+        isStacked={true}
+        normalizedGroupType="percent"
+        enableAreasSelection={true}
+        onAreaClick={(selectedAreas) => {
+          document.querySelector('#selected-areas').textContent = JSON.stringify(selectedAreas);
+        }}
+      />
+      <div id="selected-areas">Selected areas</div>
+    </div>
+  </Story>
+</Preview>
+
+## Usage example
+
+<Preview>
+  <Story name="Usage example">
+    <div style={{ height: 800, width: '100%' }}>
+      <AreaChart
+        data={dataWithManyStates}
+        yAxis={{
+          format: {
+            prefix: '$',
+            postfix: 'K',
+            decimalPlaces: 1,
+          },
+        }}
+      />
+    </div>
+  </Story>
+</Preview>
+
+## Usage example (Lasagna)
+
+<Preview>
+  <Story name="Usage example (Lasagna)">
+    <div style={{ height: 800, width: '100%' }}>
+      <AreaChart
+        data={dataWithManyStates}
+        isStacked={true}
+        normalizedGroupType="percent"
+        yAxis={{
+          isZoomable: false,
+          format: {
+            postfix: '%',
+            decimalPlaces: 3,
+          },
+          tickStep: 10,
+        }}
+        tickLabelsFontSize={14}
+        enableAreasSelection={true}
+      />
+    </div>
+  </Story>
+</Preview>
