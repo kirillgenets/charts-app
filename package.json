@@ -1,0 +1,57 @@
+{
+	"name": "charts-app",
+	"version": "0.1.0",
+	"main": "./src/index.js",
+	"author": {
+		"name": "Kiryl Henets"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kirillgenets/charts-app.git"
+	},
+	"dependencies": {
+		"classnames": "^2.2.6",
+		"element-resize-detector": "^1.2.1",
+		"lodash.clonedeep": "^4.5.0",
+		"lodash.debounce": "^4.0.8",
+		"lodash.defaultsdeep": "^4.6.1",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-fast-compare": "^3.2.0"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.11.6",
+		"@babel/core": "^7.11.6",
+		"@babel/plugin-transform-modules-commonjs": "^7.10.4",
+		"@babel/preset-env": "^7.11.5",
+		"@babel/preset-react": "^7.10.4",
+		"@storybook/addons": "^6.0.22",
+		"@storybook/react": "^6.0.22",
+		"babel-eslint": "^10.1.0",
+		"babel-loader": "^8.1.0",
+		"copyfiles": "^2.4.0",
+		"core-js": "^3.6.5",
+		"css-loader": "^4.3.0",
+		"cssnano": "^4.1.10",
+		"eslint": "^7.9.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-config-react": "^1.1.7",
+		"eslint-plugin-import": "^2.22.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"eslint-plugin-react": "^7.21.1",
+		"eslint-plugin-unused-imports": "^0.1.3",
+		"mini-css-extract-plugin": "^0.11.2",
+		"prettier": "^2.1.2",
+		"style-loader": "^1.2.1",
+		"stylelint": "^13.7.1",
+		"stylelint-config-recommended": "^3.0.0"
+	},
+	"scripts": {
+		"lint": "yarn lint:js && yarn lint:styles",
+		"lint:js": "eslint --ext js,jsx src/ --fix",
+		"lint:styles": "stylelint './src/**/*.{css,scss}' --allow-empty-input",
+		"start": "start-storybook -p 6060 -c ./config/storybook"
+	},
+	"private": true,
+	"license": "MIT"
+}
