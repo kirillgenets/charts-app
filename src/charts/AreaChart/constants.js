@@ -1,5 +1,5 @@
 export const DEFAULT_LAYOUT_DATA = {
-	showlegend: false,
+	showlegend: true,
 	xaxis: {
 		showspikes: true,
 		spikemode: 'toaxis+across',
@@ -46,7 +46,7 @@ export const DEFAULT_TOOLTIP_FONT_COLOR = '#ffffff';
 
 export const HOVER_MODE_DISABLED = false;
 
-export const HOVER_MODE_ENABLED = 'closest'; // should be 'x' for displaying tooltips for all states
+export const HOVER_MODE_ENABLED = 'x';
 
 export const PERCENT_NORMALIZED = 'percent';
 
@@ -62,21 +62,10 @@ export const DEFAULT_CHART_FRAME_RENDER_METHOD = 'front';
 
 export const TICKS_OUTSIDE = 'outside';
 
-export const PLOTLY_ZOOM_IN_BUTTON_SELECTOR = 'a[data-attr="zoom"][data-val="in"]';
-
-export const PLOTLY_ZOOM_OUT_BUTTON_SELECTOR = 'a[data-attr="zoom"][data-val="out"]';
-
-export const PLOTLY_RESET_ZOOM_BUTTON_SELECTOR = 'a[data-attr="zoom"][data-val="reset"]';
-
-export const ZOOM_CONTROLS_BACKGROUND_COLOR = 'transparent';
-
-export const ZOOM_CONTROLS_POSITION = {
-	right: 30,
-	top: 0,
-};
-
 export const TICK_LABELS_ROTATE_COEFFICIENT = 1.5;
 
 export const SELECTED_COLOR = '#000000';
 
 export const LINES_DISABLED_COLOR = 'transparent';
+
+export const DEFAULT_CHART_COLORS = ['#FCDDF2', '#419D78', '#2D3047', '#CF8E80', '#E0A458', '#FFDBB5', '#C04ABC'];

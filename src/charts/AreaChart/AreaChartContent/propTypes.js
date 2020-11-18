@@ -29,14 +29,5 @@ export default {
 	thousandSeparator: PropTypes.string, // String, that separates thousands
 	normalizedGroupType: PropTypes.oneOf(['', 'percent', 'fraction']), // The type of group normalization. For more info: https://plotly.com/python/reference/#scatter-groupnorm
 	theme: PropTypes.object, // Style config for the chart
-	displayZoomControls: PropTypes.bool, // Indicates whether zoom controls should be shown or not
-	onZoomControlClick: PropTypes.func, // Function, that is called when zoom domain is changed
-	onAreaClick: PropTypes.func, // Callback that is called on any area click
 	id: PropTypes.string, // Chart id
-	selectedAreas: PropTypes.oneOfType([
-		PropTypes.arrayOf(PropTypes.string),
-		PropTypes.arrayOf(PropTypes.object),
-		PropTypes.object,
-	]), // A list of selected areas data
-	enableAreasSelection: PropTypes.bool, // Indicates whether areas selection on click should be enabled or not
 };

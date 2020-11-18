@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
+import { ColorsIterator } from '../../../utils';
 
 import {
 	DEFAULT_AREA_DATA,
+	DEFAULT_CHART_COLORS,
 	DEFAULT_FILL_STYLE,
 	DEFAULT_STACK_GROUP_NAME,
 	LINES_DISABLED_COLOR,
@@ -20,8 +22,10 @@ const usePreparedChartData = ({ data, theme, normalizedGroupType, isStacked, dis
 				? [...data].reverse()
 				: data.sort((firstArea, secondArea) => Math.max(...secondArea.y) - Math.max(...firstArea.y));
 
+		const colors = new ColorsIterator(DEFAULT_CHART_COLORS);
+
 		return sortedData.map(({ x, y, fillColor: fillColorFromProps, lineColor: lineColorFromProps, name, marker }) => {
-			const fillColor = fillColorFromProps || undefined;
+			const fillColor = fillColorFromProps || colors.next();
 			const lineColor = displayLines ? lineColorFromProps || fillColor : LINES_DISABLED_COLOR;
 
 			return {

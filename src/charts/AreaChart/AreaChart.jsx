@@ -12,7 +12,6 @@ import './style.css';
 
 const AreaChart = ({
 	data,
-	legendConfig,
 	isStacked,
 	decimalSeparator,
 	thousandSeparator,
@@ -23,10 +22,6 @@ const AreaChart = ({
 	xAxis,
 	yAxis,
 	theme,
-	displayZoomControls,
-	onAreaClick,
-	selectedAreas,
-	enableAreasSelection,
 	id,
 }) => {
 	const preparedData = usePreparedChartData({
@@ -51,10 +46,6 @@ const AreaChart = ({
 				thousandSeparator={thousandSeparator}
 				normalizedGroupType={normalizedGroupType}
 				displayTooltips={displayTooltips}
-				displayZoomControls={displayZoomControls}
-				onAreaClick={onAreaClick}
-				enableAreasSelection={enableAreasSelection}
-				selectedAreas={selectedAreas}
 				id={id}
 			/>
 		</div>

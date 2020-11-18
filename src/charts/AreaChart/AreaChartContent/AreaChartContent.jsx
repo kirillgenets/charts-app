@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Plotly from 'plotly.js/dist/plotly';
 
 import propTypes from './propTypes';
@@ -20,12 +20,7 @@ const AreaChartContent = ({
 	thousandSeparator,
 	normalizedGroupType,
 	displayTooltips,
-	displayZoomControls,
-	onZoomControlClick,
-	onAreaClick,
-	selectedAreas: selectedAreasFromProps,
 	id,
-	enableAreasSelection,
 }) => {
 	const chartRef = useRef(null);
 
@@ -45,12 +40,7 @@ const AreaChartContent = ({
 				height: 800,
 			});
 
-			Plotly.react(
-				chartRef.current,
-				addSelectedAreasToData({ data, normalizedGroupType }),
-				currentLayout,
-				DEFAULT_OPTIONS
-			);
+			Plotly.react(chartRef.current, data, currentLayout, DEFAULT_OPTIONS);
 		};
 
 		renderChart();

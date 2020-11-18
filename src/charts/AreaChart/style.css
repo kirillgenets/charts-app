@@ -1,7 +1,7 @@
-.hovertext {
-  display: none;
+.hovertext text {
+	fill: #000000 !important;
 }
 
 .modebar-container {
-  display: none;
+	display: none;
 }

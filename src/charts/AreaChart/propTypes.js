@@ -31,12 +31,6 @@ export default {
 			lineColor: PropTypes.string, // A color of the area border
 		})
 	).isRequired, // An array of points data, that will be rendered as areas borders
-	legendConfig: PropTypes.shape({
-		isVisible: PropTypes.bool, // Indicates whether the legend should be rendered or not
-		orientation: PropTypes.oneOf(['vertical', 'horizontal', 'horizontal-left']), // Indicates in which positio chart must be rendered
-		// items: legendDataTypes, // A list of items, that will be rendered in the legend. If it is not specified, the legend items data will be calculated automatically
-		hideAndKeepPlace: PropTypes.bool, // Indicates that legend should be invisible but keep its place
-	}), // Config for legend customizing
 	isStacked: PropTypes.bool, // Indicates whether the chart should be stacked or not
 	normalizedGroupType: PropTypes.oneOf(['', 'percent', 'fraction']), // The type of group normalization. For more info: https://plotly.com/python/reference/#scatter-groupnorm
 	displayMarkers: PropTypes.bool, // Indicates whether the markers should be displayed or not
@@ -44,16 +38,6 @@ export default {
 	displayTooltips: PropTypes.bool, // Indicates whether tooltips should be visible or not
 	xAxis: axisPropType, // Config for the x-axis
 	yAxis: axisPropType, // Config for the y-axis
-	decimalSeparator: PropTypes.string, // String, that separates decimal and integer parts of the number
-	thousandSeparator: PropTypes.string, // String, that separates thousands
 	themeName: PropTypes.string, // Name of the chart theme
-	displayZoomControls: PropTypes.bool, // Indicates whether zoom controls should be shown or not
-	onAreaClick: PropTypes.func, // Callback that is called on any area click
-	selectedAreas: PropTypes.oneOfType([
-		PropTypes.arrayOf(PropTypes.string),
-		PropTypes.arrayOf(PropTypes.object),
-		PropTypes.object,
-	]), // A list of selected areas data
-	enableAreasSelection: PropTypes.bool, // Indicates whether areas selection on click should be enabled or not
 	id: PropTypes.string, // Chart id
 };
