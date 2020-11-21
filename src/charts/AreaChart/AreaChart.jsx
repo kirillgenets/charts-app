@@ -5,10 +5,10 @@ import defaultProps from './defaultProps';
 
 import AreaChartContent from './AreaChartContent';
 
-// import { getLegendData } from './utils';
 import { usePreparedChartData } from './hooks';
 
 import './style.css';
+import addResizeDetector from '../../hoc/addResizeDetector/addResizeDetector';
 
 const AreaChart = ({
 	data,
@@ -23,6 +23,7 @@ const AreaChart = ({
 	yAxis,
 	theme,
 	id,
+	size,
 }) => {
 	const preparedData = usePreparedChartData({
 		data,
@@ -47,6 +48,7 @@ const AreaChart = ({
 				normalizedGroupType={normalizedGroupType}
 				displayTooltips={displayTooltips}
 				id={id}
+				size={size}
 			/>
 		</div>
 	);
@@ -55,4 +57,4 @@ const AreaChart = ({
 AreaChart.propTypes = propTypes;
 AreaChart.defaultProps = defaultProps;
 
-export default AreaChart;
+export default addResizeDetector(AreaChart);

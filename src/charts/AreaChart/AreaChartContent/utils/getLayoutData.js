@@ -33,7 +33,6 @@ import getTextWidth from '../../../../utils/getTextWidth';
  */
 const getLayoutData = ({
 	data,
-	theme,
 	xAxis,
 	yAxis,
 	decimalSeparator,
@@ -219,6 +218,7 @@ const getLayoutData = ({
 		},
 		DEFAULT_LAYOUT_DATA
 	);
+
 	return layout;
 };
 

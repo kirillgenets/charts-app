@@ -7,7 +7,7 @@ import contextTypes from './contextTypes';
 
 import { DEFAULT_OPTIONS } from '../constants';
 
-import { getLayoutData, addSelectedAreasToData } from './utils';
+import { getLayoutData } from './utils';
 
 import './style.css';
 
@@ -21,10 +21,10 @@ const AreaChartContent = ({
 	normalizedGroupType,
 	displayTooltips,
 	id,
+	size,
 }) => {
 	const chartRef = useRef(null);
 
-	// mount + update
 	useEffect(() => {
 		const renderChart = () => {
 			const currentLayout = getLayoutData({
@@ -36,8 +36,7 @@ const AreaChartContent = ({
 				thousandSeparator,
 				normalizedGroupType,
 				displayTooltips,
-				width: 800,
-				height: 800,
+				width: size.width,
 			});
 
 			Plotly.react(chartRef.current, data, currentLayout, DEFAULT_OPTIONS);
@@ -53,19 +52,32 @@ const AreaChartContent = ({
 		thousandSeparator,
 		normalizedGroupType,
 		displayTooltips,
-		// chartWidth,
-		// chartHeight,
+		size.width,
+		size.height,
 	]);
 
-	// useEffect(() => {
-	// 	const updateChartSize = (width, height) => {
-	// 		Plotly.relayout(chartRef.current, { width, height });
-	// 	};
-
-	// 	if (chartWidth !== 0 && chartHeight !== 0) {
-	// 		updateChartSize(chartWidth, chartHeight);
-	// 	}
-	// }, [chartWidth, chartHeight]);
+	useEffect(() => {
+		const updateChartSize = (width, height) => {
+			Plotly.relayout(chartRef.current, {
+				width,
+				height,
+				...getLayoutData({
+					data,
+					xAxis,
+					yAxis,
+					theme,
+					decimalSeparator,
+					thousandSeparator,
+					normalizedGroupType,
+					displayTooltips,
+					width: size.width,
+				}),
+			});
+		};
+		if (size.width !== 0 && size.height !== 0) {
+			updateChartSize(size.width, size.height);
+		}
+	}, [size.width, size.height]);
 
 	if (!data || data.length < 1) return null;
 

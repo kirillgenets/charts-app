@@ -30,4 +30,8 @@ export default {
 	normalizedGroupType: PropTypes.oneOf(['', 'percent', 'fraction']), // The type of group normalization. For more info: https://plotly.com/python/reference/#scatter-groupnorm
 	theme: PropTypes.object, // Style config for the chart
 	id: PropTypes.string, // Chart id
+	size: PropTypes.shape({
+		width: PropTypes.number,
+		height: PropTypes.number,
+	}),
 };
