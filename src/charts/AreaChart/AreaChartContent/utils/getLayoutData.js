@@ -1,4 +1,5 @@
 import _defaultsDeep from 'lodash.defaultsdeep';
+
 import {
 	X_AXIS_NAME,
 	TICKS_OUTSIDE,
@@ -18,19 +19,6 @@ import {
 import defaultProps from '../defaultProps';
 import getTextWidth from '../../../../utils/getTextWidth';
 
-/**
- * @description Defines correct Plotly layout data from specified props
- * @param config
- * @param {object[]} config.data chart data
- * @param {object} config.theme current chart theme
- * @param {object} config.xAxis config for the x-axis
- * @param {object} config.yAxis config for the x-axis
- * @param {string} config.decimalSeparator string that separates decimal and integer parts of the number
- * @param {string} config.thousandSeparator string that separates thousands in the number
- * @param {string} config.normalizedGroupType type of normalization
- * @param {boolean} config.displayTooltips indicates whether tooltips should be displayed or not
- * @returns {object} Plotly layout data
- */
 const getLayoutData = ({
 	data,
 	xAxis,
@@ -41,17 +29,8 @@ const getLayoutData = ({
 	displayTooltips,
 	width,
 }) => {
-	/**
-	 * @description Calculates a count of parts in the number that will be separated with decimal separator
-	 * @param {number} value
-	 */
 	const getValueThousandsCount = (value) => Math.floor(`${value}`.split('').length / 3);
 
-	/**
-	 * @description Calculates the max tick label length of the provided axis name
-	 * @param {string} axisName name of the axis
-	 * @returns {number} max tick label length (width or height depending on orientation)
-	 */
 	const getMaxAxisTextLength = (axisName) => {
 		const { decimalPlaces } = axisName === X_AXIS_NAME ? xAxis.format : yAxis.format;
 
@@ -76,21 +55,11 @@ const getLayoutData = ({
 		);
 	};
 
-	/**
-	 * @description Calculates a number of string and numeric values in the current data item
-	 * @param {object} item data item
-	 * @param {string} axisName name of the axis
-	 */
 	const getTypedValuesCount = (item, axisName) => ({
 		stringValues: item[axisName].filter((value) => typeof value === 'string').length,
 		numberValues: item[axisName].filter((value) => typeof value === 'number').length,
 	});
 
-	/**
-	 * @description Finds out what type of axis is it
-	 * @param {string} axisName name of the axis
-	 * @returns {string} type of the axis
-	 */
 	const getAxisType = (axisName) => {
 		const stringValuesCount = data.filter((item) => {
 			const { stringValues, numberValues } = getTypedValuesCount(item, axisName);
@@ -105,11 +74,6 @@ const getLayoutData = ({
 		return Math.max(stringValuesCount, numericValuesCount) === stringValuesCount ? CATEGORY_TYPE : LINEAR_TYPE;
 	};
 
-	/**
-	 * @description Generates the d3 format rule depending on axis config
-	 * @param {object} axisConfig current axis config
-	 * @returns {string} d3 format rule
-	 */
 	const getAxisFormatRule = (axisConfig) => {
 		const { decimalPlaces } = axisConfig.format;
 
@@ -118,10 +82,6 @@ const getLayoutData = ({
 			: `${thousandSeparator ? ',' : ''}.`;
 	};
 
-	/**
-	 * @description Converts x-axis config from props to Plotly xaxis property from layout shape
-	 * @returns {object} Plotly xaxis config
-	 */
 	const getXAxisLayout = () => {
 		const combinedAxisProps = _defaultsDeep(xAxis, defaultProps.xAxis);
 
@@ -144,10 +104,6 @@ const getLayoutData = ({
 		});
 	};
 
-	/**
-	 * @description Converts y-axis config from props to Plotly yaxis property from layout shape
-	 * @returns {object} Plotly yaxis config
-	 */
 	const getYAxisLayout = () => {
 		const combinedAxisProps = _defaultsDeep(yAxis, defaultProps.yAxis);
 		const formatRule = getAxisFormatRule(yAxis);
@@ -172,10 +128,6 @@ const getLayoutData = ({
 		});
 	};
 
-	/**
-	 * @description Calculates plotly margin values in order to avoid tick labels cut off
-	 * @return {object} Plotly layout margin prop
-	 */
 	const getChartMargin = () => {
 		const maxXAxisTextWidth = getMaxAxisTextLength(X_AXIS_NAME) + TICK_LABEL_GAP;
 		const maxYAxisTextWidth = getMaxAxisTextLength(Y_AXIS_NAME) + TICK_LABEL_GAP;
@@ -187,10 +139,6 @@ const getLayoutData = ({
 		};
 	};
 
-	/**
-	 * @description Converts tooltip theme data to Plotly hoverlabel from layout shape
-	 * @returns {object} Plotly hoverlabel config
-	 */
 	const getTooltipLayout = () => ({
 		font: {
 			color: DEFAULT_TOOLTIP_FONT_COLOR,

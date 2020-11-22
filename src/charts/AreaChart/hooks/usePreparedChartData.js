@@ -1,13 +1,9 @@
 import { useMemo } from 'react';
-import { ColorsIterator } from '../../../utils';
 
-import {
-	DEFAULT_AREA_DATA,
-	DEFAULT_CHART_COLORS,
-	DEFAULT_STACK_GROUP_NAME,
-	LINES_DISABLED_COLOR,
-	PERCENT_NORMALIZED,
-} from '../constants';
+import { DEFAULT_CHART_COLORS } from '../../../constants';
+import { DEFAULT_AREA_DATA, DEFAULT_STACK_GROUP_NAME, LINES_DISABLED_COLOR, PERCENT_NORMALIZED } from '../constants';
+
+import { ColorsIterator } from '../../../utils';
 import { getCorrectValues, getFillStyle } from '../utils';
 
 const usePreparedChartData = ({

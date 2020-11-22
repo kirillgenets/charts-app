@@ -3,7 +3,6 @@ import Plotly from 'plotly.js/dist/plotly';
 
 import propTypes from './propTypes';
 import defaultProps from './defaultProps';
-import contextTypes from './contextTypes';
 
 import { DEFAULT_OPTIONS } from '../constants';
 
@@ -13,7 +12,6 @@ import './style.css';
 
 const AreaChartContent = ({
 	data,
-	theme,
 	xAxis,
 	yAxis,
 	decimalSeparator,
@@ -31,7 +29,6 @@ const AreaChartContent = ({
 				data,
 				xAxis,
 				yAxis,
-				theme,
 				decimalSeparator,
 				thousandSeparator,
 				normalizedGroupType,
@@ -45,7 +42,6 @@ const AreaChartContent = ({
 		renderChart();
 	}, [
 		data,
-		theme,
 		xAxis,
 		yAxis,
 		decimalSeparator,
@@ -65,7 +61,6 @@ const AreaChartContent = ({
 					data,
 					xAxis,
 					yAxis,
-					theme,
 					decimalSeparator,
 					thousandSeparator,
 					normalizedGroupType,
@@ -88,7 +83,6 @@ const AreaChartContent = ({
 	);
 };
 
-AreaChartContent.contextTypes = contextTypes;
 AreaChartContent.propTypes = propTypes;
 AreaChartContent.defaultProps = defaultProps;
 

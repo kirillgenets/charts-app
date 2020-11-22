@@ -39,7 +39,7 @@ const AreaChart = ({
 	if (!data || data.length < 1) return null;
 
 	return (
-		<div className="area-chart__wrapper">
+		<div className="area-chart">
 			<AreaChartContent
 				theme={theme}
 				data={preparedData}

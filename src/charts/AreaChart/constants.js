@@ -73,5 +73,3 @@ export const TICK_LABELS_ROTATE_COEFFICIENT = 1.5;
 export const SELECTED_COLOR = '#000000';
 
 export const LINES_DISABLED_COLOR = 'transparent';
-
-export const DEFAULT_CHART_COLORS = ['#FCDDF2', '#419D78', '#2D3047', '#CF8E80', '#E0A458', '#FFDBB5', '#C04ABC'];
