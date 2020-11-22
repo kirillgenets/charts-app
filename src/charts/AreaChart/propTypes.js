@@ -36,6 +36,7 @@ export default {
 	displayMarkers: PropTypes.bool, // Indicates whether the markers should be displayed or not
 	displayLines: PropTypes.bool, // Indicates whether the lines should be displayed or not
 	displayTooltips: PropTypes.bool, // Indicates whether tooltips should be visible or not
+	displayFill: PropTypes.bool, // Indicates whether fill should be visible or not
 	xAxis: axisPropType, // Config for the x-axis
 	yAxis: axisPropType, // Config for the y-axis
 	themeName: PropTypes.string, // Name of the chart theme

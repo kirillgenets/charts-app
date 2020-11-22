@@ -8,6 +8,7 @@ export default {
 	displayMarkers: false,
 	displayLines: false,
 	displayTooltips: true,
+	displayFill: true,
 	normalizedGroupType: '',
 	themeName: 'default',
 	xAxis: {

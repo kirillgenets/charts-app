@@ -4,15 +4,21 @@ import { ColorsIterator } from '../../../utils';
 import {
 	DEFAULT_AREA_DATA,
 	DEFAULT_CHART_COLORS,
-	DEFAULT_FILL_STYLE,
 	DEFAULT_STACK_GROUP_NAME,
 	LINES_DISABLED_COLOR,
-	NORMALIZED_FILL_STYLE,
 	PERCENT_NORMALIZED,
 } from '../constants';
-import { getCorrectValues } from '../utils';
+import { getCorrectValues, getFillStyle } from '../utils';
 
-const usePreparedChartData = ({ data, theme, normalizedGroupType, isStacked, displayLines, displayMarkers }) => {
+const usePreparedChartData = ({
+	data,
+	theme,
+	normalizedGroupType,
+	isStacked,
+	displayLines,
+	displayMarkers,
+	displayFill,
+}) => {
 	return useMemo(() => {
 		if (!data || !data.length) return null;
 
@@ -33,7 +39,7 @@ const usePreparedChartData = ({ data, theme, normalizedGroupType, isStacked, dis
 				marker: { symbol: marker },
 				fillcolor: fillColor,
 				line: { color: lineColor },
-				fill: normalizedGroupType === PERCENT_NORMALIZED ? NORMALIZED_FILL_STYLE : DEFAULT_FILL_STYLE,
+				fill: getFillStyle({ displayFill, normalizedGroupType }),
 				stackgroup: isStacked ? DEFAULT_STACK_GROUP_NAME : '',
 				groupnorm: normalizedGroupType,
 				mode: statesMode,
@@ -41,7 +47,7 @@ const usePreparedChartData = ({ data, theme, normalizedGroupType, isStacked, dis
 				...DEFAULT_AREA_DATA,
 			};
 		});
-	}, [data, theme, normalizedGroupType, isStacked, displayLines, displayMarkers]);
+	}, [data, theme, normalizedGroupType, isStacked, displayLines, displayMarkers, displayFill]);
 };
 
 export default usePreparedChartData;

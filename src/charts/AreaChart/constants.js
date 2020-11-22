@@ -28,9 +28,15 @@ export const DEFAULT_AREA_DATA = {
 	type: 'scatter',
 };
 
+export const FillStyle = {
+	NORMALIZED: 'tonexty',
+	AREA: 'tozeroy',
+	NONE: 'none',
+};
+
 export const NORMALIZED_FILL_STYLE = 'tonexty';
 
-export const DEFAULT_FILL_STYLE = 'tozeroy';
+export const DEFAULT_FILL_STYLE = 'none';
 
 export const DEFAULT_STACK_GROUP_NAME = 'lasagna';
 

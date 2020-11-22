@@ -24,6 +24,7 @@ const AreaChart = ({
 	theme,
 	id,
 	size,
+	displayFill,
 }) => {
 	const preparedData = usePreparedChartData({
 		data,
@@ -32,6 +33,7 @@ const AreaChart = ({
 		isStacked,
 		displayLines,
 		displayMarkers,
+		displayFill,
 	});
 
 	if (!data || data.length < 1) return null;
