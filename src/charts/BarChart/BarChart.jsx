@@ -5,7 +5,7 @@ import defaultProps from './defaultProps';
 
 import addResizeDetector from '../../hoc/addResizeDetector';
 
-import { useLayout, usePreparedData, useRender } from './hooks';
+import { useLayout, usePreparedData, useRender, useResize } from './hooks';
 
 const BarChart = ({ data, mode, size }) => {
 	const chartRef = useRef(null);
@@ -14,6 +14,7 @@ const BarChart = ({ data, mode, size }) => {
 	const layout = useLayout({ mode, size });
 
 	useRender({ chartRef, layout, preparedData });
+	useResize({ chartRef, layout, size });
 
 	return <div ref={chartRef} className="bar-chart" />;
 };
