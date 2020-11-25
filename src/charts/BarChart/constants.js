@@ -7,11 +7,15 @@ export const DEFAULT_OPTIONS = {
 export const DEFAULT_LAYOUT = {
 	showlegend: true,
 	xaxis: {
+		showline: true,
 		showspikes: true,
 		spikemode: 'toaxis+across',
 		spikedash: 'solid',
 		spikecolor: '#ffffff',
 		automargin: true,
+	},
+	yaxis: {
+		showline: true,
 	},
 	hoverdistance: 200,
 	spikedistance: 200,

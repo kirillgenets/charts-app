@@ -13,6 +13,7 @@ export const DEFAULT_LAYOUT_DATA = {
 	dragmode: 'pan',
 	margin: {
 		t: 0,
+		r: 100,
 	},
 };
 

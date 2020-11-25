@@ -29,7 +29,7 @@ storiesOf('Area Chart', module)
 	.add('Without fill (Line Chart)', () => (
 		<div style={{ height: '100%', width: '100%' }}>
 			<AreaChart
-				data={dataWithManyStates}
+				data={shortData}
 				yAxis={{
 					isZoomable: false,
 					format: {
@@ -40,6 +40,7 @@ storiesOf('Area Chart', module)
 				}}
 				displayFill={false}
 				displayLines={true}
+				displayMarkers={true}
 			/>
 		</div>
 	))

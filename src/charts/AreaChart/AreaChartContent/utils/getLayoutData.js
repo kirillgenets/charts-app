@@ -135,7 +135,7 @@ const getLayoutData = ({
 		return {
 			l: maxYAxisTextWidth,
 			b: maxXAxisTextWidth,
-			r: (maxXAxisTextWidth / 2) * TICK_LABELS_ROTATE_COEFFICIENT,
+			r: (maxXAxisTextWidth / 2) * TICK_LABELS_ROTATE_COEFFICIENT + DEFAULT_LAYOUT_DATA.margin.r,
 		};
 	};
 

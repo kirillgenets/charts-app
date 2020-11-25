@@ -8,6 +8,8 @@ import addResizeDetector from '../../hoc/addResizeDetector';
 import { useLayout, usePreparedData, useRender, useResize } from './hooks';
 
 const BarChart = ({ data, mode, size }) => {
+	if (!data || !data.length) return;
+
 	const chartRef = useRef(null);
 
 	const preparedData = usePreparedData({ data });
