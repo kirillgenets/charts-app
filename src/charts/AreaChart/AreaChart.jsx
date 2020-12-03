@@ -26,6 +26,9 @@ const AreaChart = ({
 	size,
 	displayFill,
 }) => {
+	if (!data || !data.length)
+		return <p style={{ fontSize: 32 }}>Мы не можем отобразить график, так как данные некорректны.</p>;
+
 	const preparedData = usePreparedChartData({
 		data,
 		theme,
@@ -35,8 +38,6 @@ const AreaChart = ({
 		displayMarkers,
 		displayFill,
 	});
-
-	if (!data || data.length < 1) return null;
 
 	return (
 		<div className="area-chart">

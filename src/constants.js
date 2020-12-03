@@ -1,1 +1,2 @@
 export const DEFAULT_CHART_COLORS = ['#282828', '#419D78', '#2D3047', '#CF8E80', '#E0A458', '#FFDBB5', '#C04ABC'];
+// #E8E8E8

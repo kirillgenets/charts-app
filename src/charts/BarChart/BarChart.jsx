@@ -8,7 +8,8 @@ import addResizeDetector from '../../hoc/addResizeDetector';
 import { useLayout, usePreparedData, useRender, useResize } from './hooks';
 
 const BarChart = ({ data, mode, size }) => {
-	if (!data || !data.length) return;
+	if (!data || !data.length)
+		return <p style={{ fontSize: 32 }}>Мы не можем отобразить график, так как данные некорректны.</p>;
 
 	const chartRef = useRef(null);
 
