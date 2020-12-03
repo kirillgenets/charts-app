@@ -3,13 +3,13 @@ import { storiesOf } from '@storybook/react';
 import AreaChart from '../AreaChart';
 import { shortData, shortDataWithLinesColor, dataWithManyStates, dataWithManyStatesAndColors } from '../mockData';
 
-storiesOf('Area Chart', module)
-	.add('Example', () => (
+storiesOf('Area Chart + Line Chart + Lasagna Chart', module)
+	.add('Area Chart', () => (
 		<div style={{ height: '100%', width: '100%' }}>
 			<AreaChart data={shortData} displayZoomControls={false} displayLines={true} />
 		</div>
 	))
-	.add('With many states', () => (
+	.add('Area Chart with many states', () => (
 		<div style={{ height: '100%', width: '100%' }}>
 			<AreaChart
 				data={dataWithManyStates}
